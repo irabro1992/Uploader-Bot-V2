@@ -18,4 +18,5 @@ tldextract
 aiofiles
 pyromod
 lk21
+pyrogram
 https://github.com/Tellybots/heroku-buildpack-ffmpeg-latest/archive/refs/tags/20.1.zip
