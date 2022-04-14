@@ -1,2 +1,2 @@
-echo "starting VideoConvertor ~@Tellybots";
+echo "starting UrlUploader ~@Tellybots";
 python3 -m bot
