@@ -34,37 +34,10 @@ from plugins.database.add import add_user_to_database
 from plugins.settings.settings import *
 
 
-@Client.on_message(filters.private & filters.photo & ~filters.edited)
-async def photo_handler(bot: Client, event: Message):
-    if not event.from_user:
-        return await event.reply_text("I don't know about you sar :(")
-    await add_user_to_database(bot, event)
-    if Config.UPDATES_CHANNEL:
-      fsub = await handle_force_subscribe(bot, event)
-      if fsub == 400:
-        return
-    editable = await event.reply_text("**👀 Processing...**")
-    await db.set_thumbnail(event.from_user.id, thumbnail=event.photo.file_id)
-    await editable.edit("**✅ ᴄᴜsᴛᴏᴍ ᴛʜᴜᴍʙɴᴀɪʟ sᴀᴠᴇᴅ sᴜᴄᴄᴇssғᴜʟʟʏ!!**")
 
 
-@Client.on_message(filters.private & filters.command(["delthumb", "deletethumbnail"]) & ~filters.edited)
-async def delete_thumb_handler(bot: Client, event: Message):
-    if not event.from_user:
-        return await event.reply_text("I don't know about you sar :(")
-    await add_user_to_database(bot, event)
-    if Config.UPDATES_CHANNEL:
-      fsub = await handle_force_subscribe(bot, event)
-      if fsub == 400:
-        return
 
-    await db.set_thumbnail(event.from_user.id, thumbnail=None)
-    await event.reply_text(
-        "**🗑️ ᴄᴜsᴛᴏᴍ ᴛʜᴜᴍʙɴᴀɪʟ ᴅᴇʟᴇᴛᴇᴅ sᴜᴄᴄᴇssғᴜʟʟʏ!!**",
-        reply_markup=InlineKeyboardMarkup([
-            [InlineKeyboardButton("⚙ ᴄᴏɴғɪɢᴜʀᴇ sᴇᴛᴛɪɴɢs 👀", callback_data="OpenSettings")]
-        ])
-    )
+
 
 @Client.on_message(filters.private & filters.command("showthumb") )
 async def viewthumbnail(bot, update):
