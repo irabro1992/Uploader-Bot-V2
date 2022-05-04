@@ -49,7 +49,7 @@ async def delthumbnail(bot, update):
 
 
 
-@Client.on_message(filters.private & filters.command("showthumb") )
+@Client.on_message(filters.private & filters.command("showthumb"))
 async def viewthumbnail(bot, update):
     if not update.from_user:
         return await update.reply_text("I don't know about you sar :(")
