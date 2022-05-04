@@ -20,7 +20,7 @@ from plugins.config import Config
 from plugins.translation import Translation
 from plugins.custom_thumbnail import *
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
-from pyrogram.types import InputMediaPhoto
+from pyrogram.types import InputMediaPhoto, Message
 from functions.display_progress import progress_for_pyrogram, humanbytes
 from plugins.database.database import db
 from PIL import Image
@@ -44,7 +44,7 @@ async def youtube_dl_call_back(bot, update):
     except (FileNotFoundError) as e:
         await bot.delete_messages(
             chat_id=update.message.chat.id,
-            message_ids=update.message.id,
+            message_ids=update.Message.id,
             revoke=True
         )
         return False
@@ -93,7 +93,7 @@ async def youtube_dl_call_back(bot, update):
     await bot.edit_message_text(
         text=Translation.DOWNLOAD_START,
         chat_id=update.message.chat.id,
-        message_id=update.message.id
+        message_id=update.Message.id
     )
     description = Translation.CUSTOM_CAPTION_UL_FILE
     if "fulltitle" in response_json:
@@ -193,7 +193,7 @@ async def youtube_dl_call_back(bot, update):
             await bot.edit_message_text(
                 chat_id=update.message.chat.id,
                 text=Translation.RCHD_TG_API_LIMIT.format(time_taken_for_download, humanbytes(file_size)),
-                message_id=update.message.id
+                message_id=update.Message.id
             )
         else:
             if Config.SCREENSHOTS:
@@ -254,7 +254,7 @@ async def youtube_dl_call_back(bot, update):
             #await bot.edit_message_text(
                 #text=Translation.UPLOAD_START,
                 #chat_id=update.message.chat.id,
-                #message_id=update.message.id
+                #message_id=update.Message.id
             #)
 
             # ref: message from @Sources_codes
@@ -361,7 +361,7 @@ async def youtube_dl_call_back(bot, update):
                     await bot.send_media_group(
                         chat_id=update.message.chat.id,
                         disable_notification=True,
-                        reply_to_message_id=update.message.id,
+                        reply_to_message_id=update.Message.id,
                         media=media_album_p
                     )
 
@@ -380,6 +380,6 @@ async def youtube_dl_call_back(bot, update):
             await bot.edit_message_text(
                 text=Translation.AFTER_SUCCESSFUL_UPLOAD_MSG_WITH_TS.format(time_taken_for_download, time_taken_for_upload),
                 chat_id=update.message.chat.id,
-                message_id=update.message.id,
+                message_id=update.Message.id,
                 disable_web_page_preview=True
             )
